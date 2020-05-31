@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Button, Container, Typography, Grid, Box, Link } from '@material-ui/core';
-import { withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
 const styles = (theme) => ({
@@ -34,27 +34,6 @@ const styles = (theme) => ({
     find_info: {
         float: 'center',
         color: '#000',
-    },
-});
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            light: '#9e9e9e',
-            main: '#000',
-            dark: '#000',
-            contrastText: '#ffc107',
-        },
-        secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
-            contrastText: '#000',
-        },
-    },
-    typography: {
-        h4: {
-            fontWeight: 500,
-        },
     },
 });
 
@@ -140,75 +119,73 @@ class Login extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <ThemeProvider theme={theme}>
-                <Container maxWidth="xs">
-                    <div className={classes.frame}>
-                        <Typography variant="h4">로그인</Typography>
-                        <form className={classes.form} noValidate autoComplete="off">
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                id="id"
-                                label="아이디"
-                                name="id"
-                                autoFocus
-                                fullWidth
-                                onChange={() => this._changeID()}
-                            />
-                            <TextField
-                                id="password"
-                                label="비밀번호"
-                                type="password"
-                                variant="outlined"
-                                margin="normal"
-                                name="password"
-                                fullWidth
-                                onChange={() => this._changePW()}
-                            />
-                        </form>
-
-                        <Button
-                            type="submit"
+            <Container maxWidth="xs">
+                <div className={classes.frame}>
+                    <Typography variant="h4">로그인</Typography>
+                    <form className={classes.form} noValidate autoComplete="off">
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
                             fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            size="large"
-                            onClick={() => this._submitUserData()}
-                        >
-                            로그인
-                        </Button>
-                        <Grid container justify="center" className={classes.findinfo}>
-                            <Grid>
-                                <Link href="#" variant="body2">
-                                    아이디 찾기
-                                </Link>
-                            </Grid>
-                            <span className={classes.bar} aria-hidden="true">
-                                |
-                            </span>
-                            <Grid>
-                                <Link href="#" variant="body2">
-                                    비밀번호 찾기
-                                </Link>
-                            </Grid>
-                            <span className={classes.bar} aria-hidden="true">
-                                |
-                            </span>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    회원가입
-                                </Link>
-                            </Grid>
-                        </Grid>
+                            id="id"
+                            label="아이디"
+                            name="id"
+                            autoFocus
+                            fullWidth
+                            onChange={() => this._changeID()}
+                        />
+                        <TextField
+                            id="password"
+                            label="비밀번호"
+                            type="password"
+                            variant="outlined"
+                            margin="normal"
+                            name="password"
+                            fullWidth
+                            onChange={() => this._changePW()}
+                        />
+                    </form>
 
-                        <Box mt={8}>
-                            <Copyright />
-                        </Box>
-                    </div>
-                </Container>
-            </ThemeProvider>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        size="large"
+                        onClick={() => this._submitUserData()}
+                    >
+                        로그인
+                    </Button>
+                    <Grid container justify="center" className={classes.findinfo}>
+                        <Grid>
+                            <Link href="#" variant="body2">
+                                아이디 찾기
+                            </Link>
+                        </Grid>
+                        <span className={classes.bar} aria-hidden="true">
+                            |
+                        </span>
+                        <Grid>
+                            <Link href="#" variant="body2">
+                                비밀번호 찾기
+                            </Link>
+                        </Grid>
+                        <span className={classes.bar} aria-hidden="true">
+                            |
+                        </span>
+                        <Grid item>
+                            <Link href="#" variant="body2">
+                                회원가입
+                            </Link>
+                        </Grid>
+                    </Grid>
+
+                    <Box mt={8}>
+                        <Copyright />
+                    </Box>
+                </div>
+            </Container>
         );
     }
 }
