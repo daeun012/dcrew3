@@ -69,7 +69,7 @@ module.exports = {
             expires.setDate(expires.getDate() + 1); // 삭제하고 싶은 날을 오늘 기준으로 더해서 선언, 하루 후에 쿠키 삭제
             const cookie_name = 'board_' + body.id;
             // console.log(req.cookies[cookie_name]) => 쿠키 조회
-            const exist_cookie = req.cookes[cookies_name];
+            const exist_cookie = req.cookies[cookie_name];
             if (!exist_cookie) {
                 res.cookie(cookie_name, true, {
                     expires: expires,
