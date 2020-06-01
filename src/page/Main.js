@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, HashRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Header from '../inc/Header.js';
 import Home from './Home';
 import Collage from './Collage';
@@ -33,11 +33,12 @@ const theme = createMuiTheme({
 });
 
 function Main() {
-    const path = window.location.hash;
+    const path = window.location.pathname;
+    console.log(path);
     return (
         <div>
             <ThemeProvider theme={theme}>
-                {path !== '#/login' && path !== '#/join' && <Header />}
+                {path !== '/login' && path !== '/join' && <Header />}
                 <Container maxWidth="lg">
                     <Route path="/" component={Home} exact />
                     <Route path="/collage" component={Collage} exact />

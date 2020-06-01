@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Input } from '@material-ui/core';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 const styles = (theme) => ({
     root: {

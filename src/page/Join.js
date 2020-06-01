@@ -74,7 +74,6 @@ class Join extends Component {
                             label="아이디"
                             name="id"
                             autoFocus
-                            fullWidth
                             helperText="5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다."
                         />
                         <TextField

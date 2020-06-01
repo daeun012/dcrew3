@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Tab, Tabs, StylesProvider } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { Tab, Tabs } from '@material-ui/core';
 
 const MyTabs = withStyles((theme) => ({
     root: { width: '100%' },

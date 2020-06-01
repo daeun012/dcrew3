@@ -1,18 +1,14 @@
 import React from 'react';
 import './App.css';
-import { Route, HashRouter, Switch } from 'react-router-dom';
-
-import Login from './page/Login';
-import Join from './page/Join';
-
+import { Route, BrowserRouter } from 'react-router-dom';
 import Main from './page/Main';
 
 function App() {
     return (
         <div className="App">
-            <HashRouter>
+            <BrowserRouter>
                 <Route path="/" component={Main} />
-            </HashRouter>
+            </BrowserRouter>
         </div>
     );
 }

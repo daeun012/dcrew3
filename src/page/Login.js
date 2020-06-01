@@ -126,7 +126,6 @@ class Login extends Component {
                         <TextField
                             variant="outlined"
                             margin="normal"
-                            fullWidth
                             id="id"
                             label="아이디"
                             name="id"
