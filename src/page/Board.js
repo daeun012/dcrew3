@@ -21,25 +21,17 @@ const styles = (theme) => ({
 });
 
 class Board extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [],
-            page: 1,
-            limit: 10, // 보여줄 목록의 개수
-            total_page: null,
-            search: '',
-        };
-    }
-
-    componentDidMount() {
-        this._getListData();
-        this._setPage();
-    }
+    state = {
+        data: [],
+        page: 1,
+        limit: 10, // 보여줄 목록의 개수
+        total_page: null,
+        search: '',
+    };
 
     _getListData = async function () {
+        console.log('getLIST');
         const { limit } = this.state;
-        const page = this._setPage();
 
         // query-string 모듈 통해 search 변수에 검색된 값 담아주기
         let search = queryString.parse(this.props.location.search);
@@ -47,6 +39,7 @@ class Board extends Component {
         if (search) {
             search = search.search;
         }
+        console.log(search);
 
         // search를 보내고
         // boards 테이블의 전체 행의 개수 가져오기
@@ -55,42 +48,43 @@ class Board extends Component {
             headers: new Headers(),
             data: { search: search },
         });
+        console.log(total_cnt.data[0]);
 
         // 게시판 목록 가져오기
         // 일단 limit과 page를 보내고 이를 이용해 보여줄 목록들을 가져옴
         const data_list = await axios('/get/board', {
             method: 'POST',
             headers: new Headers(),
-            data: { limit: limit, page: page, search: search },
+            data: { limit: limit, page: this.state.page, search: search },
         });
+        console.log(data_list);
 
         // 전체 페이지 수 구하기
         let page_arr = Math.ceil(total_cnt.data[0].cnt / limit);
 
         this.setState({ data: data_list, total_page: page_arr, search: search });
+        console.log('----------------------');
     };
 
     _changePage = (event, value) => {
+        console.log('ChangePage');
         this.setState({ page: value });
-        sessionStorage.setItem('page', value);
+
         return this._getListData();
     };
 
-    _setPage = () => {
-        if (sessionStorage.page) {
-            this.setState({ page: Number(sessionStorage.page) });
-            return Number(sessionStorage.page);
-        }
-        this.setState({ page: 1 });
-        return 1;
-    };
+    componentDidMount() {
+        console.log('didmount');
+        this._getListData();
+    }
 
     render() {
         const list = this.state.data.data;
         const { total_page, search, page } = this.state;
         const { classes } = this.props;
-        console.log(page);
-        console.log(search);
+        console.log('render');
+        console.log(list);
+        console.log(total_page, search, page);
 
         return (
             <div className={classes.root}>
@@ -108,27 +102,28 @@ class Board extends Component {
                         </TableHead>
                         <TableBody>
                             {list && list.length > 0 ? (
-                                list.map((el, key) => (
-                                    <TableRow key={key}>
-                                        <TableCell align="center">{el.board_id}</TableCell>
-                                        <TableCell align="left">{el.title}</TableCell>
-                                        <TableCell align="center"></TableCell>
-                                        <TableCell align="center">{el.date.slice(0, 10)} </TableCell>
-                                        <TableCell align="center"></TableCell>
-                                        <TableCell align="center"></TableCell>
-                                    </TableRow>
-                                ))
+                                list.map((el, key) => {
+                                    const view_url = 'board/view/' + el.board_id;
+                                    return (
+                                        <TableRow key={key}>
+                                            <TableCell align="center">{el.board_id}</TableCell>
+                                            <TableCell align="left">
+                                                <Link to={view_url}>{el.title}</Link>
+                                            </TableCell>
+                                            <TableCell align="center"></TableCell>
+                                            <TableCell align="center">{el.date.slice(0, 10)} </TableCell>
+                                            <TableCell align="center">{el.view_cnt}</TableCell>
+                                            <TableCell align="center"></TableCell>
+                                        </TableRow>
+                                    );
+                                })
                             ) : (
                                 <TableRow>
                                     {search !== '' ? (
                                         <TableCell colSpan={6} align="center">
                                             검색된 결과가 없습니다.
                                         </TableCell>
-                                    ) : (
-                                        <TableCell colSpan={6} align="center">
-                                            데이터가 없습니다.
-                                        </TableCell>
-                                    )}
+                                    ) : null}
                                 </TableRow>
                             )}
                         </TableBody>

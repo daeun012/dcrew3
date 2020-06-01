@@ -38,11 +38,17 @@ module.exports = {
         },
         board_cnt: (req, res) => {
             const body = req.body;
-
             model.get.board_cnt(body, (result) => {
                 if (result) {
                     res.send(result);
                 }
+            });
+        },
+        board_data: (req, res) => {
+            const body = req.body;
+            model.get.board_data(body, (data) => {
+                const result = { data: data };
+                res.send(result);
             });
         },
     },
@@ -54,6 +60,27 @@ module.exports = {
                     res.send(true);
                 }
             });
+        },
+    },
+    update: {
+        view_cnt: (req, res) => {
+            const body = req.body;
+            const expires = new Date(); // 쿠키 유지 시간
+            expires.setDate(expires.getDate() + 1); // 삭제하고 싶은 날을 오늘 기준으로 더해서 선언, 하루 후에 쿠키 삭제
+            const cookie_name = 'board_' + body.id;
+            // console.log(req.cookies[cookie_name]) => 쿠키 조회
+            const exist_cookie = req.cookes[cookies_name];
+            if (!exist_cookie) {
+                res.cookie(cookie_name, true, {
+                    expires: expires,
+                }); // 쿠키 이름, 쿠키에 들어갈 값, 쿠키 유지 시간
+
+                model.update.view_cnt(body, (result) => {
+                    if (result) {
+                        res.send(true);
+                    }
+                });
+            }
         },
     },
 };

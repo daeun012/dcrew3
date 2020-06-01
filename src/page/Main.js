@@ -7,6 +7,7 @@ import Board from './Board';
 import Login from './Login';
 import Join from './Join';
 import BoardWrite from './BoardWrite';
+import BoardView from './BoardView';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -34,7 +35,6 @@ const theme = createMuiTheme({
 
 function Main() {
     const path = window.location.pathname;
-    console.log(path);
     return (
         <div>
             <ThemeProvider theme={theme}>
@@ -44,6 +44,7 @@ function Main() {
                     <Route path="/collage" component={Collage} exact />
                     <Route path="/board" component={Board} exact />
                     <Route path="/board/write" component={BoardWrite} />
+                    <Route path="/board/view/:data" component={BoardView} />
                     <Route path="/login" component={Login} />
                     <Route path="/join" component={Join} />
                 </Container>

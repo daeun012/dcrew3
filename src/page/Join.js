@@ -60,6 +60,7 @@ class Join extends Component {
 
     render() {
         const { classes } = this.props;
+
         return (
             <Container maxWidth="xs">
                 <div className={classes.frame}>

@@ -23,7 +23,7 @@ module.exports = {
 
             const offset = (body.page - 1) * body.limit;
             const limit = body.page * body.limit;
-            console.log(offset, limit);
+
             db.query(
                 'SELECT * FROM boards WHERE title LIKE ? AND contents LIKE ? ORDER BY board_id DESC LIMIT ?,?',
                 [search, search, offset, limit],
@@ -32,7 +32,6 @@ module.exports = {
                         throw err;
                     } else {
                         callback(result);
-                        console.log(result);
                     }
                 }
             );
@@ -52,10 +51,30 @@ module.exports = {
                 }
             });
         },
+        board_data: (body, callback) => {
+            db.query('SELECT *  FROM boards WHERE board_id=?', [body.id], (err, result) => {
+                if (err) {
+                    throw err;
+                } else {
+                    callback(result);
+                }
+            });
+        },
     },
     add: {
         board: (body, callback) => {
-            db.query('INSERT INTO boards VALUES (null,?,?,?) ', [body.title, body.content, new Date()], (err, result) => {
+            db.query('INSERT INTO boards VALUES (NULL,?,?,?,?) ', [body.title, body.content, new Date(), 0], (err, result) => {
+                if (err) {
+                    throw err;
+                } else {
+                    callback(true);
+                }
+            });
+        },
+    },
+    update: {
+        view_cnt: (body, callback) => {
+            db.query('UPDATE boards SET view_cnt=view_cnt+1 WHERE board_id=?', [body.id], (err, result) => {
                 if (err) {
                     throw err;
                 } else {

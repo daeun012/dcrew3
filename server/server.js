@@ -4,8 +4,10 @@ const app = express(); // app이라는 변수에 담음
 const bodyParser = require('body-parser'); // 클라이언트가 보내는 데이터를 읽기 위한 모듈
 const PORT = process.env.PORT || 5000; // server로 쓸 port 번호 연결
 const router = require('./routes'); // server 경로
+const cookieParser = require('cookie-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser()); // 쿠키 이용
 app.use(bodyParser.json());
 app.use(express.json());
 app.use('/', router);
