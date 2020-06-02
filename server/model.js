@@ -23,9 +23,9 @@ module.exports = {
 
       const offset = (body.page - 1) * body.limit;
       const limit = body.page * body.limit;
-
+      console.log(search, offset, limit);
       db.query(
-        'SELECT * FROM boards WHERE title LIKE ? AND contents LIKE ? ORDER BY board_id DESC LIMIT ?,?',
+        'SELECT * FROM boards WHERE title LIKE ? OR contents LIKE ? ORDER BY board_id DESC LIMIT ?,?',
         [search, search, offset, limit],
         (err, result) => {
           if (err) {
