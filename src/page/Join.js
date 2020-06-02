@@ -71,13 +71,13 @@ class Join extends Component {
       return alert('아이디는 영문자로 시작하는 5~20자여야만 합니다.');
     }
 
-    const pw_check = /^[a-z]+[a-z0-9]{5,19}$/g;
+    /*    const pw_check = /^[a-z]+[a-z0-9]{5,19}$/g;
     if (!pw_check.test(password)) {
       return alert('비밀번호는 영문자로 시작하는 6~20자여야만 합니다.');
     } else if (password !== psw_check) {
       return alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
     }
-
+ */
     if (name.length === 0 || name.length < 2) {
       return alert('이름은 최소 2글자 이상 입력해야 합니다.');
     }
@@ -98,7 +98,7 @@ class Join extends Component {
 
   render() {
     const { classes } = this.props;
-    const b = false;
+
     return (
       <Container maxWidth="xs">
         <div className={classes.frame}>

@@ -73,12 +73,12 @@ module.exports = {
     },
     user: (body, hash_pw, now_date, callback) => {
       db.query('SELECT *  FROM users WHERE id=? ', [body.id], (err, result) => {
-        if (result > 0) {
+        if (result.length > 0) {
           callback(false);
         } else {
           db.query(
             'INSERT INTO users VALUES (NULL,?,?,?,?,?,?) ',
-            [body.id, hash_pw, body.name, body.nickname, body.email, new Date()],
+            [body.id, hash_pw, body.name, body.nickname, body.email, now_date],
             (err, result) => {
               if (err) {
                 throw err;
