@@ -1,11 +1,11 @@
 {
-    "development": {
-        "user": "root",
-        "password": "rla360700!",
-        "database": "example_db",
-        "host": "localhost",
-        "port": "3306",
-        "dialect": "mysql"
-    },
-    "salt": "gfadg564ga56dfg4hh45a6fd1gh1ag4sd21f23tg97g89g21g5h48"
+  "development": {
+    "user": "root",
+    "password": "rla360700!",
+    "database": "example_db",
+    "host": "localhost",
+    "port": "3305",
+    "dialect": "mysql"
+  },
+  "salt": "gfadg564ga56dfg4hh45a6fd1gh1ag4sd21f23tg97g89g21g5h48"
 }
