@@ -1,58 +1,35 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Typography, Toolbar, Button, Tab, Tabs, Container } from '@material-ui/core';
-
+import { withStyles, useTheme } from '@material-ui/core/styles';
+import {
+    AppBar,
+    Typography,
+    Toolbar,
+    Button,
+    IconButton,
+    Container,
+    List,
+    ListItem,
+    ListItemText,
+    Hidden,
+    Drawer,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink, Link } from 'react-router-dom';
-
-const MyTabs = withStyles({
-    root: {
-        flexGrow: 1,
-    },
-    indicator: {
-        backgroundColor: '#ffc107',
-    },
-})((props) => <Tabs centered {...props} />);
-
-const MyTab = withStyles((theme) => ({
-    root: {
-        textTransform: 'none',
-        minWidth: 72,
-        fontWeight: theme.typography.fontWeightRegular,
-        padding: theme.spacing(0, 3, 0),
-
-        color: '#fff',
-        opacity: 100,
-        fontSize: '15px',
-        '&:hover': {
-            color: '#ffc107',
-            opacity: 1,
-        },
-        '&$selected': {
-            color: '#ffc107',
-            fontWeight: theme.typography.fontWeightMedium,
-        },
-        '&:focus': {
-            color: '#ffc107',
-        },
-    },
-    selected: {},
-}))((props) => <Tab disableRipple {...props} />);
+const drawerWidth = 240;
 
 const styles = (theme) => ({
-    root: {
-        flexGrow: 1,
-    },
+    root: {},
+
     menuButton: {
         marginRight: theme.spacing(2),
     },
     title: {
-        flexGrow: 1,
         textDecoration: 'none',
         color: 'white',
         fontSize: '25px',
+        marginRight: theme.spacing(2),
     },
     formButton: {
-        flexGrow: 1,
         textAlign: 'end',
     },
     loginButton: {
@@ -69,6 +46,69 @@ const styles = (theme) => ({
             opacity: 0.9,
         },
     },
+    nav: {
+        flexGrow: '1',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    list: {
+        fontSize: '14px',
+        paddingLeft: '0',
+        listStyle: 'none',
+        paddingTop: '0',
+        paddingBottom: '0',
+        color: '#fff',
+
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+        },
+    },
+    listItem: {
+        float: 'left',
+        color: 'inherit',
+        position: 'relative',
+        display: 'block',
+        width: 'auto',
+        margin: '',
+        padding: '0',
+        '>&:focus': {
+            borderBottom: 'solid 2px #ffc107 ',
+        },
+    },
+    navLink: {
+        color: 'inherit',
+        position: 'relative',
+        padding: '0.9375rem',
+        fontWeight: '400',
+        fontSize: '15px',
+        textTransform: 'uppercase',
+        borderRadius: '3px',
+        lineHeight: '20px',
+        textDecoration: 'none',
+        margin: theme.spacing(0, 2, 0, 2),
+        display: 'inline-flex',
+        '&:hover,&:focus': {
+            color: '#ffc107',
+            background: 'rgba(200, 200, 200, 0.2)',
+        },
+        [theme.breakpoints.down('lg')]: {
+            margin: theme.spacing(0, 1, 0, 1),
+            [theme.breakpoints.down('md')]: {
+                margin: theme.spacing(0, 0.5, 0, 0.5),
+            },
+        },
+    },
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+        display: 'none',
+        [theme.breakpoints.down('sm')]: {
+            display: 'inline',
+        },
+    },
 });
 
 class Header extends Component {
@@ -77,6 +117,7 @@ class Header extends Component {
         password: '',
         login: false,
         value: 0,
+        mobileOpen: false,
     };
 
     componentDidMount() {
@@ -96,26 +137,60 @@ class Header extends Component {
         this.setState({ value: n_value });
     };
 
+    _handleDrawerToggle = () => {
+        this.setState({ mobileOpen: !this.state.mobileOpen });
+    };
+
     render() {
         const { classes } = this.props;
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar className={classes.appbar} position="static">
                     <Container maxWidth="lg">
-                        <Toolbar>
+                        <Toolbar className={classes.appbar}>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                edge="start"
+                                onClick={this._handleDrawerToggle}
+                                className={classes.menuButton}
+                            >
+                                <MenuIcon />
+                            </IconButton>
                             <Typography variant="h6" component={Link} to={'/'} className={classes.title}>
                                 Dcrew
                             </Typography>
 
-                            <MyTabs value={this.state.value} onChange={this._changeTab}>
-                                <MyTab label="홈" value={0} component={NavLink} exact to={'/'} />
-                                <MyTab label="대학교" value={1} component={NavLink} to={'/collage'} />
-                                <MyTab value={2} label="카테고리" component={NavLink} to={'/category'} />
-                                <MyTab value={3} label="동아리연합" component={NavLink} to={'/band'} />
-
-                                <MyTab value={4} label="모두의 게시판" component={NavLink} to={'/board'} />
-                            </MyTabs>
+                            <div className={classes.nav}>
+                                <List className={classes.list}>
+                                    <ListItem className={classes.listItem}>
+                                        <Button component={Link} exact="true" to={'/'} className={classes.navLink}>
+                                            홈
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button component={Link} to={'/collage'} className={classes.navLink}>
+                                            대학교
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button component={Link} to={'/category'} className={classes.navLink}>
+                                            카테고리
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button component={Link} to={'/band'} className={classes.navLink}>
+                                            동아리 연합
+                                        </Button>
+                                    </ListItem>
+                                    <ListItem className={classes.listItem}>
+                                        <Button component={Link} to={'/board'} className={classes.navLink}>
+                                            모두의 게시판
+                                        </Button>
+                                    </ListItem>
+                                </List>
+                            </div>
                             <div className={classes.formButton}>
                                 {this.state.login ? (
                                     <Button
@@ -141,6 +216,29 @@ class Header extends Component {
                         </Toolbar>
                     </Container>
                 </AppBar>
+                <nav className={classes.drawer} aria-label="mailbox folders">
+                    <Drawer
+                        variant="temporary"
+                        anchor="left"
+                        open={this.state.mobileOpen}
+                        onClose={this._handleDrawerToggle}
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
+                    >
+                        <div className={classes.toolbar} />
+                        <List>
+                            {['홈', '대학교', '카테고리', '동아리 연합', '모두의 게시판'].map((text, index) => (
+                                <ListItem button key={text}>
+                                    <ListItemText primary={text} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Drawer>
+                </nav>
             </div>
         );
     }

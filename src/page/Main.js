@@ -12,6 +12,15 @@ import Container from '@material-ui/core/Container';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 500,
+            md: 900,
+            lg: 1280,
+            xl: 1920,
+        },
+    },
     palette: {
         primary: {
             light: '#9e9e9e',
