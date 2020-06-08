@@ -54,6 +54,7 @@ function Main() {
                     <Route path="/board" component={Board} exact />
                     <Route path="/board/write" component={BoardWrite} />
                     <Route path="/board/view/:data" component={BoardView} />
+
                     <Route path="/login" component={Login} />
                     <Route path="/join" component={Join} />
                 </Container>

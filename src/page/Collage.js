@@ -58,7 +58,6 @@ class Collage extends Component {
     };
 
     render() {
-        console.log('render');
         const { classes } = this.props;
         return (
             <div className={classes.root}>

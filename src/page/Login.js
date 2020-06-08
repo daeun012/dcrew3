@@ -53,38 +53,14 @@ function Copyright() {
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            id: '',
-            password: '',
-        };
+        this.state = {};
     }
-
-    // 가장 마지막에 실행되는 react lifesycle
-    componentDidMount() {
-        if (sessionStorage.login) {
-            this.setState({ login: true });
-        }
-    }
-
-    _changeID = function () {
-        const id_v = document.getElementsByName('id')[0].value;
-        // 'id'라는 name 값을 가진 elemet 조회, value 메소드 사용해 값 가져옴
-        this.setState({
-            id: id_v,
-        }); // state의 id 값 넣기
-    };
-
-    _changePW = function () {
-        const pw_v = document.getElementsByName('password')[0].value;
-        this.setState({
-            password: pw_v,
-        });
-    };
 
     // 데이터 전송
     _submitUserData = async (e) => {
-        const id = this.state.id.trim();
-        const password = this.state.password.trim();
+        e.preventDefault();
+        const id = document.getElementsByName('id')[0].value.trim();
+        const password = document.getElementsByName('password')[0].value.trim();
         // trim 함수 : 좌, 우측 공백 제거 함수
 
         if (id === '') {
@@ -117,22 +93,14 @@ class Login extends Component {
     };
 
     render() {
+        console.log('render');
         const { classes } = this.props;
         return (
             <Container maxWidth="xs">
                 <div className={classes.frame}>
                     <Typography variant="h4">로그인</Typography>
-                    <form className={classes.form} noValidate autoComplete="off">
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            id="id"
-                            label="아이디"
-                            name="id"
-                            autoFocus
-                            fullWidth
-                            onChange={() => this._changeID()}
-                        />
+                    <div className={classes.form} noValidate autoComplete="off">
+                        <TextField variant="outlined" margin="normal" id="id" label="아이디" name="id" autoFocus fullWidth />
                         <TextField
                             id="password"
                             label="비밀번호"
@@ -141,21 +109,20 @@ class Login extends Component {
                             margin="normal"
                             name="password"
                             fullWidth
-                            onChange={() => this._changePW()}
                         />
-                    </form>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            size="large"
+                            onClick={this._submitUserData}
+                        >
+                            로그인
+                        </Button>
+                    </div>
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        size="large"
-                        onClick={() => this._submitUserData()}
-                    >
-                        로그인
-                    </Button>
                     <Grid container justify="center" className={classes.findinfo}>
                         <Grid>
                             <Link href="#" variant="body2">
